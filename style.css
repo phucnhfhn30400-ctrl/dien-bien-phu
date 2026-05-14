@@ -1,0 +1,375 @@
+:root {
+  --primary: #ffba08; /* Vàng rực rỡ */
+  --accent: #640d14;  /* Đỏ huyết dụ */
+  --bg: #1a0406;      /* Đen đỏ sâu thẳm */
+  --surface: #2d080c; /* Bề mặt đỏ tối */
+  --text: #fff5e6;    /* Trắng ngà giấy cổ */
+  --text-dim: rgba(255, 245, 230, 0.6);
+  --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; cursor: default; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Faustina', serif;
+  overflow: hidden; /* Immersive full screen */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Grain Texture */
+body::after {
+  content: "";
+  position: fixed;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Layout */
+.app-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* Header */
+.hero-header {
+  grid-column: 1 / -1;
+  padding: 30px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+}
+
+.title-block h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  line-height: 1;
+  color: var(--primary);
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.title-block p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  font-size: 0.8rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  color: var(--text-dim);
+}
+
+/* Music Controller */
+.music-control {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255,255,255,0.03);
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.play-toggle {
+  background: var(--primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.play-toggle:hover { transform: scale(1.1); box-shadow: 0 0 15px var(--primary); }
+
+.play-toggle svg { width: 18px; fill: var(--bg); }
+
+.visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+  width: 60px;
+}
+
+.bar {
+  width: 3px;
+  background: var(--primary);
+  height: 5px;
+  transition: height 0.2s ease;
+}
+
+.playing .bar { animation: dance 1s infinite alternate; }
+.playing .bar:nth-child(2) { animation-delay: 0.2s; }
+.playing .bar:nth-child(3) { animation-delay: 0.4s; }
+.playing .bar:nth-child(4) { animation-delay: 0.1s; }
+.playing .bar:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes dance {
+  0% { height: 5px; }
+  100% { height: 20px; }
+}
+
+/* Sidebar - Info */
+.sidebar {
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  background: linear-gradient(to right, rgba(0,0,0,0.5), transparent);
+}
+
+.metadata {
+  border-left: 2px solid var(--accent);
+  padding-left: 20px;
+}
+
+.chapter-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: var(--primary);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.chapter-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.progress-ring-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring circle {
+  fill: transparent;
+  stroke-width: 4;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-bg { stroke: rgba(255,255,255,0.05); }
+.progress-val { stroke: var(--primary); stroke-dasharray: 283; stroke-dashoffset: 283; }
+
+.page-counter {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Main Stage */
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2000px;
+  position: relative;
+  background: radial-gradient(circle, rgba(255, 186, 8, 0.05) 0%, transparent 70%);
+}
+
+.book-container {
+  width: 800px;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  transform-style: preserve-3d;
+  box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255, 186, 8, 0.1);
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+  z-index: 1;
+}
+
+.page.flipped { transform: rotateY(-180deg); z-index: 2; }
+
+.page-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  overflow: hidden;
+  background: #000;
+}
+
+.page-face.front { z-index: 2; }
+.page-face.back { transform: rotateY(180deg); background: var(--surface); z-index: 1; }
+
+.page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.2) contrast(1.1);
+}
+
+/* Lighting effect */
+.page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.3), transparent 20%, transparent 80%, rgba(0,0,0,0.3));
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Navigation Overlay */
+.nav-hints {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 40px;
+  z-index: 100;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.nav-btn:hover:not(:disabled) { color: var(--primary); transform: translateY(-3px); }
+.nav-btn:disabled { opacity: 0.1; cursor: not-allowed; }
+
+.nav-btn svg { width: 24px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+/* Dots Navigation */
+.dots-nav {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background: var(--text-dim);
+  border-radius: 50%;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.dot.active {
+  width: 20px;
+  border-radius: 10px;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+/* Mobile Warning */
+@media (max-width: 1024px) {
+  .app-container { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .hero-header { padding: 20px; }
+  .title-block h1 { font-size: 1.5rem; }
+  .book-container { width: 90vw; }
+}
+
+/* Custom Cursor */
+#cursor {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transition: transform 0.15s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cursor::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s ease;
+}
+
+.loader-text {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  letter-spacing: 10px;
+  color: var(--primary);
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.loader-bar {
+  width: 200px;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.2);
+  position: relative;
+}
+
+.loader-progress {
+  position: absolute;
+  left: 0; top: 0; height: 100%;
+  background: var(--primary);
+  width: 0%;
+  transition: width 0.3s ease;
+}
