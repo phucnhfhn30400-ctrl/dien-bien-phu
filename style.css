@@ -26,7 +26,7 @@ body::before {
   inset: 0;
   background-image: url("access/image.png");
   background-size: cover;
-  background-position: center;
+  background-position: -40% center;
   filter: blur(8px) brightness(0.3);
   opacity: 0.6;
   z-index: -1;
@@ -66,7 +66,6 @@ body::after {
   letter-spacing: 2px;
   line-height: 1;
   color: var(--primary);
-  text-transform: uppercase;
   text-shadow: 0 0 20px rgba(255, 186, 8, 0.3);
 }
 
@@ -75,7 +74,6 @@ body::after {
   font-weight: 400;
   font-size: 0.8rem;
   letter-spacing: 4px;
-  text-transform: uppercase;
   margin-top: 8px;
   color: var(--text-dim);
 }

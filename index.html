@@ -1,88 +1,107 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Điện Biên Phủ 1954</title>
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Faustina:ital,wght@0,300..800;1,300..800&family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
-<!-- Custom Styles -->
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Điện Biên Phủ 1954</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Faustina:ital,wght@0,300..800;1,300..800&family=Montserrat:wght@200;400;700&display=swap"
+    rel="stylesheet">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div id="cursor"></div>
+  <div id="cursor"></div>
 
-<div class="loading-overlay" id="loader">
-  <div class="loader-text">ĐANG TẢI</div>
-  <div class="loader-bar"><div class="loader-progress" id="loadProgress"></div></div>
-</div>
-
-<div class="app-container">
-  <header class="hero-header">
-    <div class="title-block">
-      <p>Bản hùng ca lịch sử</p>
-      <h1>Điện Biên Phủ <span>1954</span></h1>
+  <div class="loading-overlay" id="loader">
+    <div class="loader-text">ĐANG TẢI</div>
+    <div class="loader-bar">
+      <div class="loader-progress" id="loadProgress"></div>
     </div>
-    
-    <div class="music-control" id="musicContainer">
-      <div class="visualizer">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+  </div>
+
+  <div class="app-container">
+    <header class="hero-header">
+      <div class="title-block">
+        <div style="text-transform: uppercase;">
+          <p>Bản hùng ca lịch sử</p>
+          <h1>Điện Biên Phủ <span>1954</span></h1>
+        </div>
+        <p>Lừng lẫy năm châu,Chấn động địa cầu!</p>
       </div>
-      <button class="play-toggle" id="audioToggle" title="Bật/Tắt nhạc nền">
-        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        <svg id="pauseIcon" style="display:none" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-      </button>
-      <span style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim)">Âm thanh bối cảnh</span>
-    </div>
-  </header>
 
-  <main class="stage">
-    <div class="book-container" id="book">
-      <!-- Pages will be injected here -->
-    </div>
-
-    <!-- Redesigned Progress Ring - Floating at bottom right -->
-    <div class="progress-ring-container">
-      <svg class="progress-ring" width="100" height="100">
-        <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
-        <circle class="progress-val" id="progressRing" cx="50" cy="50" r="45"></circle>
-      </svg>
-      <div class="page-counter">
-        <span class="curr-page" id="currPage">1</span>
-        <span class="total-pages">TRANG <span id="totalIdx">16</span></span>
+      <div class="music-control" id="musicContainer">
+        <div class="visualizer">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <button class="play-toggle" id="audioToggle" title="Bật/Tắt nhạc nền">
+          <svg id="playIcon" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg id="pauseIcon" style="display:none" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+        <span style="font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim)">DUONG LEN PHIA TRUOC</span>
       </div>
-    </div>
+    </header>
 
-    <div class="nav-hints">
-      <button class="nav-btn" id="prevBtn">
-        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        Trước
-      </button>
-      <button class="nav-btn" id="nextBtn">
-        Sau
-        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-  </main>
+    <main class="stage">
+      <div class="book-container" id="book">
+        <!-- Pages will be injected here -->
+      </div>
 
-  <!-- Class Signature Canvas -->
-  <canvas id="classSignature" width="200" height="100"></canvas>
+      <!-- Redesigned Progress Ring - Floating at bottom right -->
+      <div class="progress-ring-container">
+        <svg class="progress-ring" width="100" height="100">
+          <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+          <circle class="progress-val" id="progressRing" cx="50" cy="50" r="45"></circle>
+        </svg>
+        <div class="page-counter">
+          <span class="curr-page" id="currPage">1</span>
+          <span class="total-pages">TRANG <span id="totalIdx">16</span></span>
+        </div>
+      </div>
 
-  <footer class="dots-nav" id="dotsNav"></footer>
-</div>
+      <div class="nav-hints">
+        <button class="nav-btn" id="prevBtn">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Trước
+        </button>
+        <button class="nav-btn" id="nextBtn">
+          Sau
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </main>
 
-<audio id="bgMusic" loop>
-  <source src="music/YTSave_YouTube_OFFICIAL-LIEN-KHUC-DUONG-LEN-PHIA-TRUOC-_Media_D4j730WaYcQ_007_48k.m4a" type="audio/mp4">
-</audio>
+    <!-- Class Signature Canvas -->
+    <canvas id="classSignature" width="200" height="100"></canvas>
 
-<!-- Custom Scripts -->
-<script src="script.js" defer></script>
+    <footer class="dots-nav" id="dotsNav"></footer>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="music/YTSave_YouTube_OFFICIAL-LIEN-KHUC-DUONG-LEN-PHIA-TRUOC-_Media_D4j730WaYcQ_007_48k.m4a"
+      type="audio/mp4">
+  </audio>
+
+  <!-- Custom Scripts -->
+  <script src="script.js" defer></script>
 </body>
+
 </html>
