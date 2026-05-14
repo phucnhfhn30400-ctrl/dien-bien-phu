@@ -1,22 +1,4 @@
 const LABELS = ["Bìa", "Trang 1", "Trang 2", "Trang 3", "Trang 4", "Trang 5", "Trang 6", "Trang 7", "Trang 8", "Trang 9", "Trang 10", "Trang 11", "Trang 12", "Trang 13", "Trang 14", "Kết"];
-const TITLES = [
-  'Thành Cổ Quảng Trị – 1972',
-  'Giảng đường và lệnh tổng động viên',
-  'Cuộc chia ly bên máy khâu',
-  'Vượt dòng sông tử thần',
-  'Vết thương và lời thề giữ chốt',
-  '81 ngày đêm hỏa ngục',
-  'Dòng sông máu Thạch Hãn',
-  'Chạm mặt tử thần',
-  'Chiếc khăn nhuộm đỏ',
-  '81 ngày đêm khổng lồ',
-  'Trận đánh ngày thứ 81',
-  'Sự hóa thân',
-  'Vòng tay của mẹ',
-  'Khúc ru trên dòng Thạch Hãn',
-  'Trận đánh cuối cùng',
-  'Nơi thanh xuân hóa thành bất tử'
-];
 const IMGS = Array.from({length: 16}, (_, i) => `img/${i+1}.png`);
 
 let current = 0;
@@ -37,7 +19,7 @@ function initBook() {
     
     page.innerHTML = `
       <div class="page-face front">
-        <img src="${src}" alt="${TITLES[idx]}">
+        <img src="${src}" alt="${LABELS[idx]}">
       </div>
       <div class="page-face back"></div>
     `;
@@ -58,9 +40,7 @@ function initBook() {
 
 function updateUI() {
   // Update text
-  document.getElementById('sideNum').textContent = LABELS[current].toUpperCase();
-  document.getElementById('sideTitle').textContent = TITLES[current];
-  document.getElementById('currIdx').textContent = current + 1;
+  document.getElementById('currPage').textContent = current + 1;
   document.getElementById('totalIdx').textContent = IMGS.length;
 
   // Update Buttons
@@ -82,16 +62,18 @@ function updateUI() {
 function flipPage(direction) {
   if (isAnimating) return;
   
+  const pages = document.querySelectorAll('.page');
+  
   if (direction === 1 && current < IMGS.length - 1) {
     isAnimating = true;
-    const page = document.querySelectorAll('.page')[current];
+    const page = pages[current];
     page.classList.add('flipped');
     current++;
     setTimeout(() => { isAnimating = false; }, 800);
   } else if (direction === -1 && current > 0) {
     isAnimating = true;
     current--;
-    const page = document.querySelectorAll('.page')[current];
+    const page = pages[current];
     page.classList.remove('flipped');
     setTimeout(() => { isAnimating = false; }, 800);
   }
@@ -104,19 +86,25 @@ function goToPage(target) {
   isAnimating = true;
   
   const pages = document.querySelectorAll('.page');
+  const diff = Math.abs(target - current);
+  const delay = 100;
   
   if (target > current) {
     for (let i = current; i < target; i++) {
-      setTimeout(() => { pages[i].classList.add('flipped'); }, (i - current) * 100);
+      setTimeout(() => { 
+        pages[i].classList.add('flipped');
+      }, (i - current) * delay);
     }
   } else {
     for (let i = current - 1; i >= target; i--) {
-      setTimeout(() => { pages[i].classList.remove('flipped'); }, (current - 1 - i) * 100);
+      setTimeout(() => { 
+        pages[i].classList.remove('flipped');
+      }, (current - 1 - i) * delay);
     }
   }
   
   current = target;
-  setTimeout(() => { isAnimating = false; }, Math.abs(target - current) * 100 + 800);
+  setTimeout(() => { isAnimating = false; }, diff * delay + 800);
   updateUI();
 }
 

@@ -1,9 +1,9 @@
 :root {
-  --primary: #ffba08; /* Vàng rực rỡ */
-  --accent: #640d14;  /* Đỏ huyết dụ */
-  --bg: #1a0406;      /* Đen đỏ sâu thẳm */
-  --surface: #2d080c; /* Bề mặt đỏ tối */
-  --text: #fff5e6;    /* Trắng ngà giấy cổ */
+  --primary: #ffba08; 
+  --accent: #ad2831;  
+  --bg: #640d14;      
+  --surface: #2d080c; 
+  --text: #fff5e6;   
   --text-dim: rgba(255, 245, 230, 0.6);
   --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -14,13 +14,24 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: 'Faustina', serif;
-  overflow: hidden; /* Immersive full screen */
+  overflow: hidden; 
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Grain Texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("access/3165782269788184829.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) brightness(0.3);
+  opacity: 0.6;
+  z-index: -1;
+}
+
 body::after {
   content: "";
   position: fixed;
@@ -31,20 +42,16 @@ body::after {
   z-index: 9999;
 }
 
-/* Layout */
 .app-container {
   flex: 1;
-  display: grid;
-  grid-template-columns: 350px 1fr;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   position: relative;
   z-index: 10;
 }
 
-/* Header */
 .hero-header {
-  grid-column: 1 / -1;
   padding: 30px 60px;
   display: flex;
   justify-content: space-between;
@@ -53,27 +60,26 @@ body::after {
 }
 
 .title-block h1 {
-  font-family: 'Cinzel', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
   font-weight: 900;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   line-height: 1;
   color: var(--primary);
   text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  text-shadow: 0 0 20px rgba(255, 186, 8, 0.3);
 }
 
 .title-block p {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 0.8rem;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
   text-transform: uppercase;
   margin-top: 8px;
   color: var(--text-dim);
 }
 
-/* Music Controller */
 .music-control {
   display: flex;
   align-items: center;
@@ -99,8 +105,7 @@ body::after {
 }
 
 .play-toggle:hover { transform: scale(1.1); box-shadow: 0 0 15px var(--primary); }
-
-.play-toggle svg { width: 18px; fill: var(--bg); }
+.play-toggle svg { width: 18px; fill: #640d14; }
 
 .visualizer {
   display: flex;
@@ -128,41 +133,28 @@ body::after {
   100% { height: 20px; }
 }
 
-/* Sidebar - Info */
-.sidebar {
-  padding: 40px 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 40px;
-  border-right: 1px solid rgba(255,255,255,0.05);
-  background: linear-gradient(to right, rgba(0,0,0,0.5), transparent);
-}
-
-.metadata {
-  border-left: 2px solid var(--accent);
-  padding-left: 20px;
-}
-
-.chapter-num {
-  font-family: 'Cinzel', serif;
-  font-size: 0.9rem;
-  color: var(--primary);
-  margin-bottom: 5px;
-  display: block;
-}
-
-.chapter-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
+/* Redesigned Progress Ring - Now at bottom right */
 .progress-ring-container {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin-top: 20px;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 120px;
+  height: 120px;
+  background: rgba(45, 8, 12, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 186, 8, 0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 3000;
+  transition: var(--transition);
+}
+
+.progress-ring-container:hover {
+  transform: scale(1.05);
+  border-color: var(--primary);
 }
 
 .progress-ring {
@@ -171,7 +163,7 @@ body::after {
 
 .progress-ring circle {
   fill: transparent;
-  stroke-width: 4;
+  stroke-width: 5;
   transition: stroke-dashoffset 0.5s ease;
 }
 
@@ -182,13 +174,32 @@ body::after {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Cinzel', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-/* Main Stage */
+.curr-page {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.total-pages {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  border-top: 1px solid rgba(255, 186, 8, 0.3);
+  margin-top: 5px;
+  padding-top: 2px;
+}
+
 .stage {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,7 +209,7 @@ body::after {
 }
 
 .book-container {
-  width: 800px;
+  width: 850px;
   aspect-ratio: 16 / 9;
   position: relative;
   transform-style: preserve-3d;
@@ -215,7 +226,10 @@ body::after {
   z-index: 1;
 }
 
-.page.flipped { transform: rotateY(-180deg); z-index: 2; }
+.page.flipped { 
+  transform: rotateY(-180deg); 
+  z-index: 0 !important;
+}
 
 .page-face {
   position: absolute;
@@ -235,7 +249,6 @@ body::after {
   filter: sepia(0.2) contrast(1.1);
 }
 
-/* Lighting effect */
 .page::after {
   content: "";
   position: absolute;
@@ -245,7 +258,6 @@ body::after {
   z-index: 3;
 }
 
-/* Navigation Overlay */
 .nav-hints {
   position: absolute;
   bottom: 40px;
@@ -273,16 +285,13 @@ body::after {
 
 .nav-btn:hover:not(:disabled) { color: var(--primary); transform: translateY(-3px); }
 .nav-btn:disabled { opacity: 0.1; cursor: not-allowed; }
-
 .nav-btn svg { width: 24px; stroke: currentColor; fill: none; stroke-width: 1.5; }
 
-/* Dots Navigation */
 .dots-nav {
-  grid-column: 1 / -1;
+  padding: 20px;
   display: flex;
   justify-content: center;
   gap: 8px;
-  padding: 20px;
 }
 
 .dot {
@@ -301,16 +310,17 @@ body::after {
   box-shadow: 0 0 10px var(--primary);
 }
 
-/* Mobile Warning */
 @media (max-width: 1024px) {
-  .app-container { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
   .hero-header { padding: 20px; }
   .title-block h1 { font-size: 1.5rem; }
-  .book-container { width: 90vw; }
+  .book-container { width: 95vw; }
+  .progress-ring-container { 
+    width: 80px; height: 80px;
+    bottom: 20px; right: 20px;
+  }
+  .curr-page { font-size: 1.2rem; }
 }
 
-/* Custom Cursor */
 #cursor {
   width: 40px;
   height: 40px;
@@ -346,9 +356,10 @@ body::after {
 }
 
 .loader-text {
-  font-family: 'Cinzel', serif;
-  font-size: 1.2rem;
-  letter-spacing: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 15px;
   color: var(--primary);
   margin-bottom: 20px;
   animation: pulse 2s infinite;
@@ -362,7 +373,7 @@ body::after {
 .loader-bar {
   width: 200px;
   height: 1px;
-  background: rgba(212, 175, 55, 0.2);
+  background: rgba(255, 186, 8, 0.2);
   position: relative;
 }
 
