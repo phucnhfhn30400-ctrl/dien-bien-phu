@@ -1,4 +1,3 @@
-const LABELS = ["Bìa", "Trang 1", "Trang 2", "Trang 3", "Trang 4", "Trang 5", "Trang 6", "Trang 7", "Trang 8", "Trang 9", "Trang 10", "Trang 11", "Trang 12", "Trang 13", "Trang 14", "Kết"];
 const IMGS = Array.from({length: 16}, (_, i) => `img/${i+1}.png`);
 
 let current = 0;
@@ -19,7 +18,7 @@ function initBook() {
     
     page.innerHTML = `
       <div class="page-face front">
-        <img src="${src}" alt="${LABELS[idx]}">
+        <img src="${src}" alt="Trang ${idx + 1}">
       </div>
       <div class="page-face back"></div>
     `;
@@ -158,4 +157,35 @@ window.addEventListener('load', () => {
   }, 50);
 });
 
+// Draw Class Signature on Canvas
+function drawSignature() {
+  const canvas = document.getElementById('classSignature');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Set style
+  ctx.font = 'italic 700 36px "Playfair Display", serif';
+  ctx.fillStyle = '#ffba08';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+  ctx.shadowBlur = 4;
+  ctx.shadowOffsetX = 2;
+  ctx.shadowOffsetY = 2;
+  
+  // Draw text
+  ctx.fillText('11A1', 20, 60);
+  
+  // Add a decorative underline
+  ctx.beginPath();
+  ctx.moveTo(20, 70);
+  ctx.lineTo(120, 70);
+  ctx.strokeStyle = '#ffba08';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
 initBook();
+drawSignature();
+// Re-draw after fonts loaded to ensure correct font is used
+document.fonts.ready.then(drawSignature);

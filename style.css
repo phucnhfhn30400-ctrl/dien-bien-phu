@@ -24,7 +24,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("access/3165782269788184829.jpg");
+  background-image: url("access/image.png");
   background-size: cover;
   background-position: center;
   filter: blur(8px) brightness(0.3);
@@ -286,6 +286,15 @@ body::after {
 .nav-btn:hover:not(:disabled) { color: var(--primary); transform: translateY(-3px); }
 .nav-btn:disabled { opacity: 0.1; cursor: not-allowed; }
 .nav-btn svg { width: 24px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+#classSignature {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 3000;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(255, 186, 8, 0.4));
+}
 
 .dots-nav {
   padding: 20px;
