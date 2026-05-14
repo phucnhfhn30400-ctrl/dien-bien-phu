@@ -1,4 +1,4 @@
-const IMGS = Array.from({length: 15}, (_, i) => `img/${i+1}.png`);
+const IMGS = Array.from({length: 16}, (_, i) => `img/${i+1}.png`);
 
 let current = 0;
 let isAnimating = false;
